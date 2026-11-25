@@ -1,0 +1,22 @@
+local monitor = peripheral.find("monitor")
+if not monitor then
+    print("No se encontro ningun monitor conectado.")
+    return
+end
+
+-- Ajusta la escala si el texto se ve muy grande o pequeno (ej. 0.5, 1, 2)
+monitor.setTextScale(1)
+monitor.clear()
+monitor.setCursorPos(1, 1)
+
+local oldTerm = term.redirect(monitor)
+
+local ok, err = pcall(function()
+    shell.run("examen.lua")
+end)
+
+term.redirect(oldTerm)
+
+if not ok then
+    print("Error al ejecutar examen.lua: " .. tostring(err))
+end
